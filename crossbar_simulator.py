@@ -19,6 +19,11 @@ class crossbar_simulator:
             if(self.faulty_memristor[1]>=wordline_range[0] and self.faulty_memristor[1]<=wordline_range[1]):
                 return 1
         return 2
+    
+    def detect_current(self, activated_bitline,activated_wordline):
+        if(self.faulty_memristor[0]== activated_bitline or self.faulty_memristor[1]==activated_wordline):
+            return 1
+        return 2
 
 temp=crossbar_simulator(5,6)
 print(temp.faulty_memristor)
