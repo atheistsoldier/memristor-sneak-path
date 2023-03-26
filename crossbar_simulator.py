@@ -6,6 +6,10 @@ class crossbar_simulator:
         self.__faulty_memristor=[random.randrange(m),random.randrange(n)]
     
     def verify_fault(self, expected_faulty_memristor_position):
+        if(expected_faulty_memristor_position[0]>=self.m or expected_faulty_memristor_position[0]<0):
+            raise Exception(f"expected faulty wordline found was {expected_faulty_memristor_position[0]} but it should be less than "+self.m+" and greater than 0")
+        if(expected_faulty_memristor_position[1]>=self.n or expected_faulty_memristor_position[1]<0):
+            raise Exception(f"expected faulty bitline found was {expected_faulty_memristor_position[1]} but it should be less than "+self.n+" and greater than 0")
         if expected_faulty_memristor_position==self.__faulty_memristor:
             return True
         else:
@@ -14,19 +18,19 @@ class crossbar_simulator:
     def detect_current_range(self, activated_wordline_ranges,activated_bitline_ranges):
         for wordline_range in activated_wordline_ranges:
             if(len(wordline_range)!=2):
-                raise Exception(wordline_range+"is not a valid wordline range. It should be a list of 2 numbers with lower and upper range")
+                raise Exception(f"{wordline_range} is not a valid wordline range. It should be a list of 2 numbers with lower and upper range")
             if(wordline_range[0]>wordline_range[1]):
-                raise Exception(wordline_range+"is not a valid wordline range. Lower range cannot be greater than upper range")
+                raise Exception(f"{wordline_range} is not a valid wordline range. Lower range cannot be greater than upper range")
             if(wordline_range[0]<0 or wordline_range[0]>=self.m or wordline_range[1]<0 or wordline_range[1]>=self.m):
-                 raise Exception(wordline_range+"is not a valid wordline range. Activated wordline should be less than "+self.m+" and greater than 0")
+                 raise Exception(f"{wordline_range} is not a valid wordline range. Activated wordline should be less than {self.m} and greater than 0")
         
         for bitline_range in activated_bitline_ranges:
             if(len(bitline_range)!=2):
-                raise Exception(bitline_range+"is not a valid bitline range. It should be a list of 2 numbers with lower and upper range")
+                raise Exception(f"{bitline_range} is not a valid bitline range. It should be a list of 2 numbers with lower and upper range")
             if(bitline_range[0]>bitline_range[1]):
-                raise Exception(bitline_range+"is not a valid bitline range. Lower range cannot be greater than upper range")
+                raise Exception(f"{bitline_range} is not a valid bitline range. Lower range cannot be greater than upper range")
             if(bitline_range[0]<0 or bitline_range[0]>=self.n or bitline_range[1]<0 or bitline_range[1]>=self.n):
-                 raise Exception(bitline_range+"is not a valid bitline range. Activated wordline should be less than "+self.n+" and greater than 0")
+                 raise Exception(f"{bitline_range} is not a valid bitline range. Activated wordline should be less than {self.n} and greater than 0")
              
         for wordline_range in activated_wordline_ranges:
             if(self.__faulty_memristor[0]>=wordline_range[0] and self.__faulty_memristor[0]<=wordline_range[1]):
@@ -39,15 +43,15 @@ class crossbar_simulator:
     
     def detect_current(self,activated_wordline, activated_bitline):
         if(activated_wordline>=self.m or activated_wordline<0):
-            raise Exception("activated wordline should be less than "+self.m+" and greater than 0")
+            raise Exception(f"activated wordline should be less than {self.m} and greater than 0")
         if(activated_bitline>=self.n or activated_bitline<0):
-            raise Exception("activated bitline should be less than "+self.n+" and greater than 0")
+            raise Exception(f"activated bitline should be less than {self.n} and greater than 0")
         if(self.__faulty_memristor[0]== activated_wordline or self.__faulty_memristor[1]==activated_bitline):
             return 1
         return 2
 
-temp=crossbar_simulator(5,6)
+#temp=crossbar_simulator(5,6)
 
-print(temp.verify_fault([2,3]))
+#print(temp.verify_fault([2,3]))
 
-print(temp.detect_current_range([[2,3]], [[2,2]]))
+#print(temp.detect_current_range([[2,3]], [[2,2]]))
