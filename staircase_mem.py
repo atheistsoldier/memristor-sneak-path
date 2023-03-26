@@ -1,10 +1,10 @@
 import crossbar_simulator
-class staircase:
+class staircase_mem:
     def __init__(self, m, n):
         self.m = m
         self.n = n
-        self.detected_wordline=-1
-        self.detected_bitline=-1
+        self.detected_faulty_wordline=-1
+        self.detected_faulty_bitline=-1
     def staircase_search(self):
         m=self.m
         n=self.n
@@ -36,5 +36,5 @@ class staircase:
         else:
             print(f"Fault found at [{self.detected_faulty_wordline},{self.detected_faulty_bitline}] and not verified successfully")
             
-temp=staircase(10,10)
+temp=staircase_mem(10,10)
 temp.staircase_search()
