@@ -9,9 +9,11 @@ class fault_dict_mem:
 
     def eliminate_wordline_and_bitline(self, wordline_tested, bitline_tested):
         for bitline in range(self.n):
+            # set all non-faulty or untested bitlines across the wordline as non-faulty
             if self.fault_dict[wordline_tested][bitline] != 1:
                 self.fault_dict[wordline_tested][bitline] = 0
         for wordline in range(self.m):
+            # set all non-faulty or untested wordlines across the bitline as non-faulty
             if self.fault_dict[wordline][bitline_tested] != 1:
                 self.fault_dict[wordline][bitline_tested] = 0
 
@@ -29,8 +31,8 @@ class fault_dict_mem:
 
     def fault_dictionary(self):
         simul = crossbar_simulator.crossbar_simulator(self.m, self.n)
-        eliminated_wordlines = []
-        eliminated_bitlines = []
+        eliminated_wordlines = []       #set of wordlines with no fault detected
+        eliminated_bitlines = []        #set of bitlines with no fault detected
         for wordline in range(self.m):
             for bitline in range(self.n):
                 if wordline in eliminated_wordlines:
